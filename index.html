@@ -1,352 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌌 Cloud Hunter - التخزين السحابي المستقبلي</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
-</head>
-<body>
-    <!-- Toast Container -->
-    <div id="toast-container"></div>
-
-    <!-- Auth Screen -->
-    <div id="auth-screen" class="screen active">
-        <div class="cyber-background"></div>
-        <div class="auth-container">
-            <div class="logo-section">
-                <h1 class="cyber-title">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    Cloud Hunter
-                </h1>
-                <p class="cyber-subtitle">التخزين السحابي اللامحدود</p>
-            </div>
-
-            <!-- Login Form -->
-            <div id="login-form" class="auth-form active">
-                <h2 class="form-title">
-                    <i class="fas fa-sign-in-alt"></i>
-                    تسجيل الدخول
-                </h2>
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="login-email" placeholder="البريد الإلكتروني" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="login-password" placeholder="كلمة المرور" required>
-                </div>
-                <button class="cyber-btn primary" onclick="login()">
-                    <span class="btn-text">دخول</span>
-                    <span class="btn-glow"></span>
-                </button>
-                <div class="form-footer">
-                    <a href="#" class="link" onclick="showResetPassword()">نسيت كلمة المرور؟</a>
-                    <p>ليس لديك حساب؟ <a href="#" class="link" onclick="switchToSignup()">إنشاء حساب</a></p>
-                </div>
-            </div>
-
-            <!-- Signup Form -->
-            <div id="signup-form" class="auth-form">
-                <h2 class="form-title">
-                    <i class="fas fa-user-plus"></i>
-                    إنشاء حساب جديد
-                </h2>
-                <div class="input-group">
-                    <i class="fas fa-user"></i>
-                    <input type="text" id="signup-name" placeholder="الاسم الكامل" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="signup-email" placeholder="البريد الإلكتروني" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="signup-password" placeholder="كلمة المرور (6 أحرف على الأقل)" required>
-                </div>
-                <div class="input-group">
-                    <i class="fas fa-lock"></i>
-                    <input type="password" id="signup-confirm-password" placeholder="تأكيد كلمة المرور" required>
-                </div>
-                <button class="cyber-btn primary" onclick="signup()">
-                    <span class="btn-text">إنشاء الحساب</span>
-                    <span class="btn-glow"></span>
-                </button>
-                <div class="form-footer">
-                    <p>لديك حساب بالفعل؟ <a href="#" class="link" onclick="switchToLogin()">تسجيل الدخول</a></p>
-                </div>
-            </div>
-
-            <!-- Reset Password Form -->
-            <div id="reset-form" class="auth-form">
-                <h2 class="form-title">
-                    <i class="fas fa-key"></i>
-                    إعادة تعيين كلمة المرور
-                </h2>
-                <p class="form-description">سنرسل لك رابط لإعادة تعيين كلمة المرور</p>
-                <div class="input-group">
-                    <i class="fas fa-envelope"></i>
-                    <input type="email" id="reset-email" placeholder="البريد الإلكتروني" required>
-                </div>
-                <button class="cyber-btn primary" onclick="resetPassword()">
-                    <span class="btn-text">إرسال الرابط</span>
-                    <span class="btn-glow"></span>
-                </button>
-                <div class="form-footer">
-                    <a href="#" class="link" onclick="switchToLogin()">العودة لتسجيل الدخول</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Main App Screen -->
-    <div id="app-screen" class="screen">
-        <div class="cyber-background"></div>
-        
-        <!-- Header -->
-        <header class="app-header">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <span>Cloud Hunter</span>
-                </div>
-                <div class="user-info">
-                    <span class="user-name" id="user-name">المستخدم</span>
-                    <button class="cyber-btn secondary small" onclick="logout()">
-                        <i class="fas fa-sign-out-alt"></i>
-                        خروج
-                    </button>
-                </div>
-            </div>
-        </header>
-
-        <!-- Main Content -->
-        <main class="app-main">
-            <div class="container">
-                <!-- Navigation Tabs -->
-                <div class="tabs">
-                    <button class="tab-btn active" data-tab="upload" onclick="switchTab('upload')">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                        رفع الملفات
-                    </button>
-                    <button class="tab-btn" data-tab="files" onclick="switchTab('files')">
-                        <i class="fas fa-folder-open"></i>
-                        مكتبة الملفات
-                    </button>
-                    <button class="tab-btn" data-tab="manual" onclick="switchTab('manual')">
-                        <i class="fas fa-book"></i>
-                        دليل الاستخدام
-                    </button>
-                    <button class="tab-btn" data-tab="developer" onclick="switchTab('developer')">
-                        <i class="fas fa-code"></i>
-                        المطور
-                    </button>
-                </div>
-
-                <!-- Upload Section -->
-                <section id="upload-section" class="tab-content active">
-                    <div class="section-card">
-                        <h2 class="section-title">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            رفع الملفات
-                        </h2>
-                        <div class="upload-zone" id="upload-zone">
-                            <div class="upload-icon">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                            </div>
-                            <h3>اسحب الملف وأفلته هنا</h3>
-                            <p>أو انقر لاختيار ملف من جهازك</p>
-                            <input type="file" id="file-input" hidden>
-                            <button class="cyber-btn primary" onclick="document.getElementById('file-input').click()">
-                                <i class="fas fa-folder-open"></i>
-                                اختيار ملف
-                            </button>
-                        </div>
-                        <div id="upload-progress" class="upload-progress hidden">
-                            <div class="progress-info">
-                                <span id="file-name">اسم الملف</span>
-                                <span id="upload-status">جاري الرفع...</span>
-                            </div>
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progress-fill"></div>
-                            </div>
-                            <div class="progress-percent" id="progress-percent">0%</div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Files Library Section -->
-                <section id="files-section" class="tab-content">
-                    <div class="section-card">
-                        <h2 class="section-title">
-                            <i class="fas fa-folder-open"></i>
-                            مكتبة الملفات
-                            <button class="cyber-btn secondary small" onclick="refreshFiles()">
-                                <i class="fas fa-sync-alt"></i>
-                                تحديث
-                            </button>
-                        </h2>
-                        <div id="files-container" class="files-grid">
-                            <div class="loading-spinner">
-                                <i class="fas fa-spinner fa-spin"></i>
-                                <p>جاري تحميل الملفات...</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Manual Section -->
-                <section id="manual-section" class="tab-content">
-                    <div class="section-card">
-                        <h2 class="section-title">
-                            <i class="fas fa-book"></i>
-                            دليل الاستخدام
-                        </h2>
-                        <div class="manual-content">
-                            <div class="manual-item">
-                                <div class="manual-icon">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                </div>
-                                <div class="manual-text">
-                                    <h3>كيفية رفع الملفات</h3>
-                                    <p>قم بسحب الملف وإفلاته في منطقة الرفع، أو انقر على زر "اختيار ملف" لتصفح ملفاتك. سيتم رفع الملف تلقائياً إلى خادم التخزين.</p>
-                                </div>
-                            </div>
-                            <div class="manual-item">
-                                <div class="manual-icon">
-                                    <i class="fas fa-database"></i>
-                                </div>
-                                <div class="manual-text">
-                                    <h3>حدود التخزين</h3>
-                                    <p>الحد الأقصى لحجم الملف الواحد هو <strong>2 جيجابايت</strong>. يمكنك رفع عدد غير محدود من الملفات. الملفات المدعومة: المستندات، الصور، الفيديوهات، والملفات المضغوطة.</p>
-                                </div>
-                            </div>
-                            <div class="manual-item">
-                                <div class="manual-icon">
-                                    <i class="fas fa-link"></i>
-                                </div>
-                                <div class="manual-text">
-                                    <h3>مشاركة الملفات</h3>
-                                    <p>بعد رفع الملف، يمكنك نسخ رابط مختصر له من مكتبة الملفات. الرابط قابل للمشاركة مع أي شخص ويمكن استخدامه للتحميل المباشر.</p>
-                                </div>
-                            </div>
-                            <div class="manual-item">
-                                <div class="manual-icon">
-                                    <i class="fas fa-shield-alt"></i>
-                                </div>
-                                <div class="manual-text">
-                                    <h3>الأمان والخصوصية</h3>
-                                    <p>جميع ملفاتك محمية ومرتبطة بحسابك فقط. لا يمكن لأي شخص آخر الوصول إلى ملفاتك إلا إذا شاركت الرابط معه.</p>
-                                </div>
-                            </div>
-                            <div class="manual-item">
-                                <div class="manual-icon">
-                                    <i class="fas fa-trash-alt"></i>
-                                </div>
-                                <div class="manual-text">
-                                    <h3>حذف الملفات</h3>
-                                    <p>يمكنك حذف أي ملف من مكتبتك في أي وقت. الملفات المحذوفة لا يمكن استرجاعها.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Developer Section -->
-                <section id="developer-section" class="tab-content">
-                    <div class="section-card">
-                        <h2 class="section-title">
-                            <i class="fas fa-code"></i>
-                            معلومات المطور
-                        </h2>
-                        <div class="developer-content">
-                            <div class="developer-card">
-                                <div class="developer-avatar">
-                                    <i class="fas fa-user-tie"></i>
-                                </div>
-                                <h3>المطور</h3>
-                                <p class="developer-name">General MRT</p>
-                                <div class="developer-links">
-                                    <a href="https://t.me/General_MRT" target="_blank" class="cyber-btn primary">
-                                        <i class="fab fa-telegram"></i>
-                                        تواصل عبر تليجرام
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="tech-stack">
-                                <h3>التقنيات المستخدمة</h3>
-                                <div class="tech-items">
-                                    <div class="tech-item">
-                                        <i class="fab fa-html5"></i>
-                                        <span>HTML5</span>
-                                    </div>
-                                    <div class="tech-item">
-                                        <i class="fab fa-css3-alt"></i>
-                                        <span>CSS3</span>
-                                    </div>
-                                    <div class="tech-item">
-                                        <i class="fab fa-js"></i>
-                                        <span>JavaScript</span>
-                                    </div>
-                                    <div class="tech-item">
-                                        <i class="fas fa-fire"></i>
-                                        <span>Firebase</span>
-                                    </div>
-                                    <div class="tech-item">
-                                        <i class="fab fa-telegram"></i>
-                                        <span>Telegram API</span>
-                                    </div>
-                                    <div class="tech-item">
-                                        <i class="fas fa-link"></i>
-                                        <span>Bit.ly API</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="features">
-                                <h3>المميزات</h3>
-                                <ul>
-                                    <li><i class="fas fa-check"></i> تخزين غير محدود عبر Telegram</li>
-                                    <li><i class="fas fa-check"></i> مصادقة آمنة عبر Firebase</li>
-                                    <li><i class="fas fa-check"></i> اختصار روابط تلقائي</li>
-                                    <li><i class="fas fa-check"></i> واجهة مستخدم عصرية بتصميم Cyberpunk</li>
-                                    <li><i class="fas fa-check"></i> متجاوب مع جميع الأجهزة</li>
-                                    <li><i class="fas fa-check"></i> رفع ومشاركة الملفات بسهولة</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </main>
-
-        <!-- Footer -->
-        <footer class="app-footer">
-            <p>&copy; 2024 Cloud Hunter. جميع الحقوق محفوظة.</p>
-            <p>تطوير <a href="https://t.me/General_MRT" target="_blank" class="link">General MRT</a></p>
-        </footer>
-    </div>
-
-    <!-- Loading Overlay -->
-    <div id="loading-overlay" class="loading-overlay hidden">
-        <div class="loading-content">
-            <div class="cyber-spinner"></div>
-            <p id="loading-text">جاري التحميل...</p>
-        </div>
-    </div>
-
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
-    
-    <!-- Main JavaScript -->
-    <script src="js/config.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/upload.js"></script>
-    <script src="js/files.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/app.js"></script>
-</body>
-</html>
